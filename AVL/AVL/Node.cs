@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AVL
 {
-    class Node
+    public class Node
     {
         public string value;
         public string meaning;

@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
-namespace AVL_Tree
+namespace AVL
 {
     public class AVLTree
     {
@@ -99,11 +99,11 @@ namespace AVL_Tree
                 return 0;
             return height(N.left) - height(N.right);
         }
-        public Node InsertHelper(Node node, int key)
+        public Node InsertHelper(Node node, string value,string meaning)
         {
-            return insert(node, key, 1, 1, 34);
+            return insert(node, value,meaning, 1, 1, 34);
         }
-        public Node insert(Node node, int key, int kali, int bagi, int tinggi)
+        public Node insert(Node node, string key,string meaning, int kali, int bagi, int tinggi) //kali: time     bagi: for     tinggi: high
         {
             if (node == null)
             {
@@ -115,30 +115,30 @@ namespace AVL_Tree
                 lingkaran.Add("lingkaran" + ctrLingkaran, new Lingkaran(484 / bagi * kali + 1, tinggi, key.ToString()));
                 ctrLingkaran++;
                 form.pictureBox1.Invalidate();
-                return (new Node(key, "lingkaran" + (ctrLingkaran - 1)));
+                return (new Node(key,meaning, "lingkaran" + (ctrLingkaran - 1)));
 
             }
 
-            if (key < node.key)
+            if (String.Compare(key, node.value) < 0)
             {
-                form.Status.Text = key + " is lesser than " + node.key;
+                form.Status.Text = key + " is lesser than " + node.value;
                 lingkaran[node.idLingkaran].brush = new SolidBrush(Color.Yellow);
                 delay();
                 form.Status.Text = " Current go to left";
                 lingkaran[node.idLingkaran].brush = new SolidBrush(Color.Black);
                 delay();
 
-                node.left = insert(node.left, key, (kali * 2) - 1, bagi * 2, tinggi + 100);
+                node.left = insert(node.left, key, meaning, (kali * 2) - 1, bagi * 2, tinggi + 100);
             }
-            else if (key > node.key)
+            else if (String.Compare(key, node.value) > 0)
             {
-                form.Status.Text = key + " is greater than " + node.key;
+                form.Status.Text = key + " is greater than " + node.value;
                 lingkaran[node.idLingkaran].brush = new SolidBrush(Color.Yellow);
                 delay();
                 form.Status.Text = " Current go to right";
                 lingkaran[node.idLingkaran].brush = new SolidBrush(Color.Black);
                 delay();
-                node.right = insert(node.right, key, (kali * 2) + 1, bagi * 2, tinggi + 100);
+                node.right = insert(node.right, key, meaning, (kali * 2) + 1, bagi * 2, tinggi + 100);
             }
             else
                 return node;
@@ -154,34 +154,34 @@ namespace AVL_Tree
 
             // If this node becomes unbalanced, then  
             // there are 4 cases Left Left Case  
-            if (balance > 1 && key < node.left.key)
+            if (balance > 1 && String.Compare(key, node.left.value) < 0)
             {
-                form.Status.Text = "Right Rotate on " + node.key;
+                form.Status.Text = "Right Rotate on " + node.value;
                 delay();
                 return rightRotate(node);
             }
 
             // Right Right Case  
-            if (balance < -1 && key > node.right.key)
+            if (balance < -1 && String.Compare(key, node.right.value) > 0)
             {
-                form.Status.Text = "Right Rotate on " + node.key;
+                form.Status.Text = "Right Rotate on " + node.value;
                 delay();
                 return leftRotate(node);
             }
 
             // Left Right Case  
-            if (balance > 1 && key > node.left.key)
+            if (balance > 1 && String.Compare(key, node.right.value) > 0)
             {
-                form.Status.Text = "Double right Rotate on " + node.key;
+                form.Status.Text = "Double right Rotate on " + node.value;
                 delay();
                 node.left = leftRotate(node.left);
                 return rightRotate(node);
             }
 
             // Right Left Case  
-            if (balance < -1 && key < node.right.key)
+            if (balance < -1 && String.Compare(key, node.right.value) < 0)
             {
-                form.Status.Text = "Double left Rotate on " + node.key;
+                form.Status.Text = "Double left Rotate on " + node.value;
                 delay();
                 node.right = rightRotate(node.right);
                 return leftRotate(node);
@@ -206,7 +206,7 @@ namespace AVL_Tree
             return current;
         }
 
-        public Node deleteNode(Node root, int key)
+        public Node deleteNode(Node root, string key)
         {
             // STEP 1: PERFORM STANDARD BST DELETE  
             if (root == null)
@@ -218,9 +218,9 @@ namespace AVL_Tree
 
             // If the key to be deleted is smaller than  
             // the root's key, then it lies in left subtree  
-            if (key < root.key)
+            if (String.Compare(key, root.value) < 0)
             {
-                form.Status.Text = key + " is lesser than " + root.key;
+                form.Status.Text = key + " is lesser than " + root.value;
                 lingkaran[root.idLingkaran].brush = new SolidBrush(Color.Yellow);
                 delay();
                 form.Status.Text = " Current go to left";
@@ -232,9 +232,9 @@ namespace AVL_Tree
 
             // If the key to be deleted is greater than the  
             // root's key, then it lies in right subtree  
-            else if (key > root.key)
+            else if (String.Compare(key, root.value) > 0)
             {
-                form.Status.Text = key + " is greater than " + root.key;
+                form.Status.Text = key + " is greater than " + root.value;
                 lingkaran[root.idLingkaran].brush = new SolidBrush(Color.Yellow);
                 delay();
                 form.Status.Text = " Current go to right";
@@ -279,10 +279,11 @@ namespace AVL_Tree
                     Node temp = minValueNode(root.right);
 
                     // Copy the inorder successor's data to this node  
-                    root.key = temp.key;
+                    root.value = temp.value;
+                    root.meaning = temp.meaning; //logically
 
                     // Delete the inorder successor  
-                    root.right = deleteNode(root.right, temp.key);
+                    root.right = deleteNode(root.right, temp.value);
                 }
 
             }
@@ -302,7 +303,7 @@ namespace AVL_Tree
             // Left Left Case  
             if (balance > 1 && getBalance(root.left) >= 0)
             {
-                form.Status.Text = "Right Rotate on " + root.key;
+                form.Status.Text = "Right Rotate on " + root.value;
                 delay();
                 return rightRotate(root);
             }
@@ -310,7 +311,7 @@ namespace AVL_Tree
             if (balance > 1 && getBalance(root.left) < 0)
             {
 
-                form.Status.Text = "Double Right Rotate on " + root.key;
+                form.Status.Text = "Double Right Rotate on " + root.value;
                 delay();
 
                 root.left = leftRotate(root.left);
@@ -320,7 +321,7 @@ namespace AVL_Tree
             // Right Right Case  
             if (balance < -1 && getBalance(root.right) <= 0)
             {
-                form.Status.Text = "Left Rotate on " + root.key;
+                form.Status.Text = "Left Rotate on " + root.value;
                 delay();
                 return leftRotate(root);
             }
@@ -328,7 +329,7 @@ namespace AVL_Tree
             // Right Left Case  
             if (balance < -1 && getBalance(root.right) > 0)
             {
-                form.Status.Text = "Double Rotate on " + root.key;
+                form.Status.Text = "Double Rotate on " + root.value;
                 delay();
 
                 root.right = rightRotate(root.right);
@@ -346,20 +347,20 @@ namespace AVL_Tree
         {
             if (node != null)
             {
-                Console.WriteLine(node.key + " ");
+                Console.WriteLine(node.value + " ");
                 preOrder(node.left);
                 preOrder(node.right);
             }
         }
-        public void find(int value)
+        public void find(string value)
         {
             if (root == null) return;
             Node current = root;
             while (current != null)
             {
-                if (value < current.key)
+                if (String.Compare(value, current.value) < 0)
                 {
-                    form.Status.Text = value + " is lesser than " + current.key;
+                    form.Status.Text = value + " is lesser than " + current.value;
                     lingkaran[current.idLingkaran].brush = new SolidBrush(Color.Yellow);
                     delay();
                     form.Status.Text = " Current go to left";
@@ -367,9 +368,9 @@ namespace AVL_Tree
                     delay();
                     current = current.left;
                 }
-                else if (value > current.key)
+                else if (String.Compare(value, current.value) > 0)
                 {
-                    form.Status.Text = value + " is greater than " + current.key;
+                    form.Status.Text = value + " is greater than " + current.value;
                     lingkaran[current.idLingkaran].brush = new SolidBrush(Color.Yellow);
                     delay();
                     form.Status.Text = " Current go to right";
@@ -400,7 +401,7 @@ namespace AVL_Tree
             inOrder(root.left);
             lingkaran[root.idLingkaran].brush = new SolidBrush(Color.Yellow);
             delay();
-            inOrderResult += root.key + " ";
+            inOrderResult += root.value + " ";
             inOrder(root.right);
 
         }
@@ -418,7 +419,7 @@ namespace AVL_Tree
             if (root == null) return;
             inOrderClear(ref root.left, (kali * 2) - 1, bagi * 2, tinggi + 100);
 
-            lingkaran.Add("lingkaran" + ctrLingkaran, new Lingkaran(484 / bagi * kali + 1, tinggi, root.key.ToString()));
+            lingkaran.Add("lingkaran" + ctrLingkaran, new Lingkaran(484 / bagi * kali + 1, tinggi, root.value.ToString()));
             root.idLingkaran = "lingkaran" + ctrLingkaran;
             ctrLingkaran++;
             form.pictureBox1.Invalidate();

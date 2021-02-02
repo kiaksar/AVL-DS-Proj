@@ -67,7 +67,7 @@ namespace AVL
 
         private void InsertBtn_Click(object sender, EventArgs e)
         {
-            tree.root = tree.InsertHelper(tree.root, Convert.ToInt32(valueBox.Text));
+            tree.root = tree.InsertHelper(tree.root, valueBox.Text ,meaningBox.Text);
             tree.inOrderHelper();
         }
 

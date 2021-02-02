@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AVL
 {
-    class Garis
+    public class Garis
     {
         public int x1, x2, y1, y2;
         public Garis(int x1, int y1, int x2, int y2)

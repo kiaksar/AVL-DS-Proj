@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Drawing;
 namespace AVL
 {
-    class Lingkaran
+    public class Lingkaran
     {
         public int x;
         public int y;
