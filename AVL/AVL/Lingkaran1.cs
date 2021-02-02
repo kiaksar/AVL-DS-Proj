@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 using System.Drawing;
 namespace AVL
 {
-    class Environment
+    class Lingkaran
     {
         public int x;
         public int y;
         public string value;
         public Brush brush;
-        public Environment(int x, int y, string value)
+        public Lingkaran(int x, int y, string value)
         {
             this.x = x;
             this.y = y;

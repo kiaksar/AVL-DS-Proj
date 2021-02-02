@@ -13,13 +13,13 @@ namespace AVL
         public int height;
         public Node right;
         public Node left;
-        public string idLine;
-        public string idEnvironment;
-        public Node(string value, string meaning, string idEnvironment)
+        public string idGaris;
+        public string idLingkaran;
+        public Node(string value, string meaning, string idLingkaran)
         {
             this.value = value;
             this.meaning = meaning;
-            this.idEnvironment = idEnvironment;
+            this.idLingkaran = idLingkaran;
             height = 1;
         }
     }
