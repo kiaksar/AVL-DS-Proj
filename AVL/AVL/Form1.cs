@@ -20,14 +20,6 @@ namespace AVL
             this.Text = "AVL Visualization";
             tree = new AVLTree(this);
             ///* Constructing tree given in the above figure */
-            //tree.root = tree.InsertHelper(tree.root, 9);
-            //tree.root = tree.InsertHelper(tree.root, 5);
-            //tree.root = tree.InsertHelper(tree.root, 10);
-            //tree.root = tree.InsertHelper(tree.root, 0);
-            //tree.root = tree.InsertHelper(tree.root, 6);
-            //tree.root = tree.InsertHelper(tree.root, 11);
-            //tree.root = tree.InsertHelper(tree.root, -1);
-            //tree.root = tree.InsertHelper(tree.root, 1);
             tree.preOrder(tree.root);
             foreach (var item in tree.lingkaran)
             {
@@ -52,7 +44,6 @@ namespace AVL
             {
                 e.Graphics.FillEllipse(item.brush, item.x, item.y, 50, 50);
                 e.Graphics.DrawString(item.value, new Font("Arial", 16), new SolidBrush(Color.White), new Point(item.x + 8, item.y + 10));
-                //    e.Graphics.DrawString(item.balanceFactor.ToString(), new Font("Arial", 16), new SolidBrush(Color.Black), new Point(item.x + 38, item.y + 10));
             }
         }
 
@@ -73,7 +64,7 @@ namespace AVL
 
         private void deleteBtn_Click(object sender, EventArgs e)
         {
-            tree.root = tree.deleteNode(tree.root, Convert.ToInt32(valueBox.Text));
+            tree.root = tree.deleteNode(tree.root, valueBox.Text);
             tree.inOrderHelper();
         }
 
@@ -91,7 +82,7 @@ namespace AVL
 
         private void Find_Click(object sender, EventArgs e)
         {
-            tree.find(Convert.ToInt32(valueBox.Text));
+            tree.find(valueBox.Text);
         }
 
         private void InOrder_Click(object sender, EventArgs e)
