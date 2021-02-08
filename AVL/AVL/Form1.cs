@@ -42,8 +42,9 @@ namespace AVL
             }
             foreach (var item in tree.lingkaran.Values)
             {
-                e.Graphics.FillEllipse(item.brush, item.x, item.y, 50, 50);
-                e.Graphics.DrawString(item.value, new Font("Arial", 16), new SolidBrush(Color.White), new Point(item.x + 8, item.y + 10));
+                e.Graphics.FillEllipse(item.brush, item.x, item.y, 60, 60);
+                e.Graphics.DrawString(item.value, new Font("Arial", 16), new SolidBrush(Color.White), new Point(item.x, item.y + 10));
+                e.Graphics.DrawString(item.meaning, new Font("Arial", 8), new SolidBrush(Color.White), new Point(item.x, item.y + 30));
             }
         }
 
@@ -58,6 +59,11 @@ namespace AVL
 
         private void InsertBtn_Click(object sender, EventArgs e)
         {
+            if (meaningBox.Text == "" || valueBox.Text == "")
+            {
+                MessageBox.Show("Field is empty !");
+                return;
+            }
             tree.root = tree.InsertHelper(tree.root, valueBox.Text ,meaningBox.Text);
             tree.inOrderHelper();
         }
@@ -82,8 +88,13 @@ namespace AVL
 
         private void Find_Click(object sender, EventArgs e)
         {
+            if (valueBox.Text == "")
+            {
+                MessageBox.Show("Field is empty !");
+            }
             tree.find(valueBox.Text);
         }
+
 
         private void InOrder_Click(object sender, EventArgs e)
         {
@@ -92,10 +103,14 @@ namespace AVL
             tree.inOrderResult = "";
             tree.inOrderHelper();
         }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        private void findMeaning_Click(object sender, EventArgs e)
         {
-
+            if (meaningBox.Text=="")
+            {
+                MessageBox.Show("Field is empty !");
+                return;
+            }
+            tree.findMeaning(meaningBox.Text);
         }
     }
 }

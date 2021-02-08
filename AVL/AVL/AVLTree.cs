@@ -65,16 +65,12 @@ namespace AVL
         Node leftRotate(Node x)
         {
             //y= new root 
-            //T2= anak kiri root baru
             Node y = x.right;
             //50
             Node T2 = y.left;
             //48
             // Perform rotation  
-
-            //kiri 50 44 sama 17
             y.left = x;
-            //kanan 44 48
             x.right = T2;
 
             // Update heights  
@@ -112,7 +108,7 @@ namespace AVL
                 form.Status.Text = "Inserting node";
                 delay();
 
-                lingkaran.Add("lingkaran" + ctrLingkaran, new Lingkaran(484 / bagi * kali + 1, tinggi, key.ToString()));
+                lingkaran.Add("lingkaran" + ctrLingkaran, new Lingkaran(484 / bagi * kali + 1, tinggi, key.ToString(), meaning.ToString()));
                 ctrLingkaran++;
                 form.pictureBox1.Invalidate();
                 return (new Node(key,meaning, "lingkaran" + (ctrLingkaran - 1)));
@@ -395,6 +391,49 @@ namespace AVL
             delay();
 
         }
+        public void findMeaning(string value)
+        {
+            if (root == null) return;
+            Node current = root;
+            while (current != null)
+            {
+                if (String.Compare(value, current.meaning) < 0)
+                {
+                    form.Status.Text = value + " is lesser than " + current.meaning;
+                    lingkaran[current.idLingkaran].brush = new SolidBrush(Color.Yellow);
+                    delay();
+                    form.Status.Text = " Current go to left";
+                    lingkaran[current.idLingkaran].brush = new SolidBrush(Color.Black);
+                    delay();
+                    current = current.left;
+                }
+                else if (String.Compare(value, current.meaning) > 0)
+                {
+                    form.Status.Text = value + " is greater than " + current.meaning;
+                    lingkaran[current.idLingkaran].brush = new SolidBrush(Color.Yellow);
+                    delay();
+                    form.Status.Text = " Current go to right";
+                    lingkaran[current.idLingkaran].brush = new SolidBrush(Color.Black);
+                    current = current.right;
+                    delay();
+                }
+                else
+                {
+                    form.Status.Text = value + " exist in tree";
+                    lingkaran[current.idLingkaran].brush = new SolidBrush(Color.Yellow);
+                    delay();
+                    lingkaran[current.idLingkaran].brush = new SolidBrush(Color.Black);
+                    form.mbox(value + " has been found in tree");
+                    delay();
+                    return;
+                }
+
+            }
+            form.Status.Text = value + "Value not found";
+            form.mbox(value + " doesn't exist in tree");
+            delay();
+
+        }
         public void inOrder(Node root)
         {
             if (root == null) return;
@@ -419,7 +458,7 @@ namespace AVL
             if (root == null) return;
             inOrderClear(ref root.left, (kali * 2) - 1, bagi * 2, tinggi + 100);
 
-            lingkaran.Add("lingkaran" + ctrLingkaran, new Lingkaran(484 / bagi * kali + 1, tinggi, root.value.ToString()));
+            lingkaran.Add("lingkaran" + ctrLingkaran, new Lingkaran(484 / bagi * kali + 1, tinggi, root.value.ToString(),root.meaning.ToString()));
             root.idLingkaran = "lingkaran" + ctrLingkaran;
             ctrLingkaran++;
             form.pictureBox1.Invalidate();

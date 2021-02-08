@@ -11,12 +11,14 @@ namespace AVL
         public int x;
         public int y;
         public string value;
+        public string meaning;
         public Brush brush;
-        public Lingkaran(int x, int y, string value)
+        public Lingkaran(int x, int y, string value,string meaning)
         {
             this.x = x;
             this.y = y;
             this.value = value;
+            this.meaning = meaning;
             brush = new SolidBrush(Color.Black);
         }
     }
